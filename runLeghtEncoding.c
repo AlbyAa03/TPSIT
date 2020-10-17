@@ -3,14 +3,14 @@
 #include <string.h>
 
 void encoding(){
-    printf("inserire una stringa: ...");
-    char stringa[100];
-    fflush(stdin);
-    scanf("%s",stringa);
+    printf("inserire una stringa: ...");//input string
+    char stringa[100];//declaration of string variable
+    fflush(stdin);//clean keyboard' buffer 
+    scanf("%s",stringa);//input string
 
-    int cnt=0, consec=1;
+    int cnt=0, consec=1;//declaration of two variables
 
-    while(stringa[cnt]!='\0'){
+    while(stringa[cnt]!='\0'){//condizione while. Cicla se non ha finito di passare lettera per lettera la stringa
         if(stringa[cnt]== stringa[cnt+1]){
             consec++;
         }
@@ -42,7 +42,23 @@ void decoding(){
 }
 
 void main(){
-    encoding();
-    decoding();
+        printf"scelte:\n0: esci dal programma\n1: codifica di una stringa\n2: decodifica di una stringa");
+        int scelta;
+    do{
+        printf("\n\ninserire scelta: ...");
+        scanf("%d",&scelta);
+        switch(scelta){
+            case 1:
+                encoding();
+            break;
+            case 2:
+                decoding();
+            break;
+            default:
+            break;
+        }
+
+    }while(scelta!=0);
+    printf("\n\nsei uscito");
     
 }
