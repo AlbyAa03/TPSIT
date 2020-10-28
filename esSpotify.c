@@ -8,31 +8,36 @@ typedef struct canzone{
     int val;
 }Canzone;
 
-void leggiFile(Canzone playlist[],FILE *fp,int *cnt){
-    char lettera;
-    char parola[100];
-    int indice=0;
-    while(fscanf(fp,"%c",&lettera)!=EOF){
-        if(lettera==','){
-            parola[strlen(parola)]='\0';
-            switch (indice)
-            {
-            case 0:
-                playlist[*cnt].numero=(*cnt)+1;
+void leggiFile(Canzone playlist[],FILE *fp,int *cnt){//*cnt è il numero di canzoni 
+    char lettera; // lettera che legge nel file (lettera per lettera)
+    char parola[100]; //parola completa (successione di tutte le lettere prima della ',')
+    int indice=0; // indice che serve a capire cosa sto leggendo
+    while(fscanf(fp,"%c",&lettera)!=EOF){//legge lettera
+        if(lettera==','){// se è arrivata alla fine della parola
+            parola[strlen(parola)]='\0';//aggiunge alla fine della parola completa '0'
+            /*
+            INDICE:
+            0-> numero della canzone
+            1-> titolo della canzone
+            2-> autore della canzone
+            */
+            switch (indice){
+                case 0:
+                    playlist[*cnt].numero=(*cnt)+1;
+                    break;
+                case 1:
+                    strcpy(playlist[*cnt].nome,parola);
                 break;
-            case 1:
-                strcpy(playlist[*cnt].nome,parola);
-            break;
-            case 2:
-                strcpy(playlist[*cnt].autore,parola);
-            break;
+                case 2:
+                    strcpy(playlist[*cnt].autore,parola);
+                break;
             }
-            indice=(indice+1)%3;
-            memset(&parola[0],0,sizeof(parola));
-            if(indice==0)
-                *cnt = *cnt + 1;
+            indice=(indice+1)%3;//incremento indice
+            memset(&parola[0],0,sizeof(parola));//azzera parola
+            if(indice==0)//se ho finito di leggere la canzone
+                *cnt = *cnt + 1;//incremento contatore canzone
         }else{
-            parola[strlen(parola)]=lettera;
+            parola[strlen(parola)]=lettera;//aggiunge alla fine della parola l'ultima lettera letta
         }
     }
     return;
