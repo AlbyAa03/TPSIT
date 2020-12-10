@@ -56,10 +56,15 @@ void canzoniRandom(Canzone* playlist,int cnt){
     }
     return;
 }
-
+void freeStruttura(Canzone* playlist){
+    if(playlist->next != NULL){
+        freeStruttura(playlist->next);
+        free(playlist);
+    }
+    return;
+}
 
 void main(){
-    srand(time(NULL));
     FILE *fp;
     if((fp=fopen("spotify.csv","r"))==NULL){
         printf("il file non esiste");
@@ -68,9 +73,9 @@ void main(){
         Canzone* playlist = (Canzone *) malloc(sizeof(Canzone));
         leggiFile(playlist,fp,&cnt);
         
-        free(playlist);
         fclose(fp);
         canzoniRandom(playlist,cnt);
+        freeStruttura(playlist);
     }
     return;
 }
